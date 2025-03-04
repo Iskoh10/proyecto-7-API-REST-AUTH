@@ -5,7 +5,7 @@ const projectSchema = new mongoose.Schema(
     name: { type: String, required: true },
     description: { type: String, required: true },
     objectives: { type: String, required: true },
-    projectFunding: { type: number, required: true, min: 0 },
+    projectFunding: { type: Number, required: true, min: 0 },
     currency: { type: String, required: true, enum: ['EUR', 'USD', 'GBP'] },
     responsable: { type: String, required: true },
     contact: { type: Number, required: true }
@@ -16,6 +16,6 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
-const Issue = mongoose.model('projects', projectSchema, 'projects');
+const Project = mongoose.model('projects', projectSchema, 'projects');
 
-module.exports = { Issue };
+module.exports = { Project };

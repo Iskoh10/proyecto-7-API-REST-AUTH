@@ -9,10 +9,10 @@ Una API REST AUTH que te permite interaccionar con un sistemas de gestión de pr
 ## Colección Organismos
 
 ### 1. **Obtener todos los organismos**
--**URL**: "/api/v1/organisms"
--**Método**: "GET"
--**Descripción**: Obtiene la lista de todos los organismos en la base de datos.
--**Respuesta de ejemplo**: 
+- **URL**: "/api/v1/organisms"
+- **Método**: "GET"
+- **Descripción**: Obtiene la lista de todos los organismos en la base de datos.
+- **Respuesta de ejemplo**: 
 ```json
 [
 	{

@@ -6,6 +6,14 @@ const register = async (req, res, next) => {
   try {
     const user = new User(req.body);
 
+    if (req.body.rol === 'admin') {
+      return res
+        .status(404)
+        .json(
+          'Está prohibido crear el rol admin, sólo un admin puede darte ese poder'
+        );
+    }
+
     const userDuplicated = await User.findOne({ email: req.body.email });
 
     if (userDuplicated) {
@@ -32,10 +40,11 @@ const login = async (req, res, next) => {
       const token = generateSign(user._id);
       return res.status(200).json({ token, user });
     } else {
-      return res.status(400).json('Usuario o contraseña incorrectos');
+      return res.status(400).json('Usuario o contraseñaa incorrectos');
     }
   } catch (error) {
-    return res.status(400).json('error');
+    console.log(error);
+    return res.status(500).json('error');
   }
 };
 

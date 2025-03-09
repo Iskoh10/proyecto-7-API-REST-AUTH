@@ -1,3 +1,6 @@
+const { canDeleteUser } = require('../../middlewares/canDeleteUser');
+const { isAdmin } = require('../../middlewares/isAdmin');
+const { isAuth } = require('../../middlewares/isAuth');
 const {
   getUsers,
   register,
@@ -8,9 +11,9 @@ const {
 const usersRouter = require('express').Router();
 
 usersRouter.post('/register', register);
-usersRouter.put('/:id', updateUser);
+usersRouter.put('/:id', [isAdmin], updateUser);
 usersRouter.post('/login', login);
-usersRouter.delete('/:id', deleteUser);
-usersRouter.get('/', getUsers);
+usersRouter.delete('/:id', [isAuth, canDeleteUser], deleteUser);
+usersRouter.get('/', [isAuth], getUsers);
 
 module.exports = usersRouter;

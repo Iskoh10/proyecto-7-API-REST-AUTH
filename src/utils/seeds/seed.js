@@ -1,6 +1,6 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const users = require('../../data/users');
+const bcrypt = require('bcrypt');
 const { User } = require('../../api/models/users');
 const { Organism } = require('../../api/models/organisms');
 const organisms = require('../../data/organisms');
@@ -44,6 +44,11 @@ const lanzarSemilla = async () => {
 
     // Usuarios
     const users = getUsers(projectsMap);
+
+    for (const user of users) {
+      user.password = await bcrypt.hash(user.password, 10);
+    }
+
     await User.insertMany(users);
     console.log('Usuarios introducidos');
 

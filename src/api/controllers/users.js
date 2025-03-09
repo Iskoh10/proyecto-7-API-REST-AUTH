@@ -41,11 +41,41 @@ const login = async (req, res, next) => {
 
 const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate({
+      path: 'nameProjects',
+      populate: {
+        path: 'organism',
+        collection: 'organisms'
+      }
+    });
     return res.status(200).json(users);
   } catch (error) {
     return res.status(400).json('error');
   }
 };
 
-module.exports = { register, login, getUsers };
+const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newUser = new User(req.body);
+    newUser._id = id;
+    const userUpdated = await User.findByIdAndUpdate(id, newUser, {
+      new: true
+    });
+    return res.status(200).json(userUpdated);
+  } catch (error) {
+    return res.status(400).json('error');
+  }
+};
+
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const userDeleted = await User.findByIdAndDelete(id);
+    return res.status(200).json(userDeleted);
+  } catch (error) {
+    return res.status(400).json('error');
+  }
+};
+module.exports = { register, login, getUsers, updateUser, deleteUser };
